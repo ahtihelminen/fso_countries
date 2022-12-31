@@ -3,9 +3,10 @@ import App from './App'
 import './index.css'
 import axios from 'axios'
 
-axios.get('http://localhost:3001/persons').then(response => {
+axios.get('/api/persons').then(response => {
   const persons = response.data
   ReactDOM.createRoot(document.getElementById('root')).render(
     <App persons={persons}/>
   )
 })
+ 
