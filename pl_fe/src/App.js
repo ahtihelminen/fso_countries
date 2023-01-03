@@ -31,6 +31,14 @@ const Notification = ({identity, message}) => {
       </div>
     )
   }
+
+  if (identity === 4) {
+    return(
+      <div className="error">
+        {message}
+      </div>
+    )
+  }
 }
 
 const Header = ({header}) => {
@@ -109,7 +117,7 @@ const App = () => {
         setPersons(initialPersons)
       }
      )
-   }
+   }, []
   )
   
   
@@ -163,6 +171,7 @@ const App = () => {
               `Information of ${person.name} has already been removed from server`
             )
             setTimeout(() => {
+              setIdentity(0)
               setMessage(null)
             }, 5000)
             setPersons(persons.filter(p => p.id !== person.id))
@@ -185,15 +194,23 @@ const App = () => {
             setPersons(persons.concat(returnedPerson))
             setNewName('')
             setNewNumber('')
-          }
-        )
-        setIdentity(1)
-        setMessage(`Added ${newName}`)
-        setTimeout(() => {
-          setIdentity(0)
-          setMessage(null)
-        }
-        , 5000)
+            setIdentity(1)
+            setMessage(`Added ${newName}`)
+            setTimeout(() => {
+              setIdentity(0)
+              setMessage(null)
+            }, 5000)
+          })
+          .catch(error => {
+            setIdentity(4)
+            setMessage(`${JSON.stringify(error.response.data)}`)            
+            setTimeout(() => {
+              setIdentity(0)
+              setMessage(null)
+            }, 5000)
+          })
+        
+        
       }
   }
 
