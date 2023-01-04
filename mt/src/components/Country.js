@@ -33,16 +33,13 @@ const PrintWeather = ({country, api_key}) => {
     }
 
     else {
-        console.log(weather)
         let imgCode = null
         const imgCodes0 = {2: '11', 3: '09', 6: '13', 7: '50'}
         const imgCodes1 = {50: '10', 51: '13', 52: '09', 53: '09'}
         const imgCodes2 = {800: '01', 801: '02', 802: '03', 803: '04', 804: '04'}
         const imgInfo = weather['weather']['0']
-        console.log(imgInfo)
         
         const id = imgInfo['id'].toString()
-        console.log(id[0])
 
         if (imgCodes0[`${id[0]}`]) {
             imgCode = imgCodes0[`${id[0]}`]
