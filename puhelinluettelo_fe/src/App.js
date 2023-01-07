@@ -184,7 +184,7 @@ const App = () => {
               setIdentity(0)
               setMessage(null)
             }, 5000)
-          })
+        })
         setIdentity(2)
         setMessage(`${person.name}'s number has been replaced`)
         setTimeout(() => {
