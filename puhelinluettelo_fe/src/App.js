@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from 'axios' 
-import personService from './services/persons'
+import personService from './services/personService'
 
 
 const Notification = ({identity, message}) => {
@@ -165,17 +165,25 @@ const App = () => {
             setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
             setNewName('')
             setNewNumber('')
+          })
           .catch(error => {
             setIdentity(4)
-            setMessage(
-              `Information of ${person.name} has already been removed from server`
-            )
+            if (error.code === 'ERR_BAD_REQUEST') {
+              setMessage(`${JSON.stringify(error.response.data)}`)
+            } else if (error.code === 'ERR_NOT_FOUND') {
+              setMessage(`${JSON.stringify(error.response.data)}`)
+              personService
+                .getAll()
+                .then(initialPersons => {
+                  setPersons(initialPersons)
+                })
+                setNewName('')
+                setNewNumber('')
+            }
             setTimeout(() => {
               setIdentity(0)
               setMessage(null)
             }, 5000)
-            setPersons(persons.filter(p => p.id !== person.id))
-          })
           })
         setIdentity(2)
         setMessage(`${person.name}'s number has been replaced`)
